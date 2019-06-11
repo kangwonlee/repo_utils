@@ -14,10 +14,15 @@ def main():
 
 def get_folders():
         folders = [item for item in os.listdir(os.curdir) if (
-                    os.path.isdir(item) and os.path.exists(os.path.join(item, '.git'))
+                    os.path.isdir(item) and is_git_repository(item)
                 )]
         random.shuffle(folders)
         return folders
+
+
+def is_git_repository(folder):
+        local_repo = os.path.join(folder, '.git')
+        return os.path.exists(local_repo) and os.path.isdir(local_repo)
 
 
 if "__main__" == __name__:
