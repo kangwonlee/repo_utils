@@ -1,2 +1,3 @@
-# repo_utils
-utilities to help manage multiple repositories
+# Repository Utilities
+
+Utilities to help manage multiple repositories
