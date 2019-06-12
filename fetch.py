@@ -1,3 +1,16 @@
+"""
+Fetch from subfolders
+
+What it does:
+Fetches git repositores under current working directory.
+First level only.
+
+How to use:
+$ cd <to a folder containing multiple repositories>
+$ python fetch.py
+"""
+
+
 import os
 import subprocess
 import sys
