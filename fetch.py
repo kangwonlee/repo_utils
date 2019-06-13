@@ -24,13 +24,12 @@ def main(argv):
         folder_gen
     )
 
-    list(
-        map(
-            lambda repo: subprocess.check_call(
-                ['git', 'fetch', '--all']
-                ,cwd=repo
-            ),
-            git_repo_gen
+    return all(
+        list(
+            map(
+                lambda repo: repeat_this(repo),
+                git_repo_gen,
+            )
         )
     )
 
