@@ -12,6 +12,7 @@ $ python fetch.py
 
 
 import os
+import random
 import subprocess
 import sys
 
@@ -24,11 +25,15 @@ def main(argv):
         folder_gen
     )
 
+    git_repo_list = list(git_repo_gen)
+
+    random.shuffle(git_repo_list)
+
     return all(
         list(
             map(
                 lambda repo: repeat_this(repo),
-                git_repo_gen,
+                git_repo_list,
             )
         )
     )
