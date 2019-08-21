@@ -73,8 +73,19 @@ def umbrella():
     assert not os.path.exists(folder)
 
 
-        # after use, remove the folder
-        folder.cleanup()
+def test_umbrella(umbrella):
+    assert os.path.exists(umbrella["top"])
+    assert umbrella['folder']
+    assert umbrella['repos']
+
+    for folder in umbrella['folder']:
+        assert os.path.exists(folder), folder
+
+    for folder in umbrella['repos']:
+        assert os.path.exists(folder), folder
+        assert os.path.exists(
+            os.path.join(folder, '.git', 'config')
+        ), folder
 
 
 if "__main__" == __name__:
