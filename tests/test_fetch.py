@@ -26,51 +26,66 @@ def test_get_working_folder_file():
     assert os.path.dirname(__file__) == result, result
 
 
-@pytest.fixture(scope="module")
-def umbrella():
-    with tempfile.TemporaryDirectory() as folder:
+@pytest.fixture(scope="session")
+def umbrella(tmpdir_factory):
+    folder = tmpdir_factory.mktemp("umbrella")
 
         assert os.path.exists(folder)
 
-        # prepare a test folder
-        sub_folder_00 = tempfile.TemporaryDirectory(dir=folder)
-        sub_folder_01 = tempfile.TemporaryDirectory(dir=folder)
-        sub_folder_git_00 = tempfile.TemporaryDirectory(dir=folder)
-        sub_folder_git_01 = tempfile.TemporaryDirectory(dir=folder)
+    # prepare a test folder tree
+    # https://doc.pytest.org/en/latest/tmpdir.html#the-tmpdir-factory-fixture
 
-        temp_file_00 = tempfile.TemporaryFile(dir=folder)
-        temp_file_01 = tempfile.TemporaryFile(dir=folder)
+    sub_folder_00 = os.path.join(folder, 'sub_00')
+    sub_folder_01 = os.path.join(folder, 'sub_01')
+    sub_folder_git_00 = os.path.join(folder, 'repo_00')
+    sub_folder_git_01 = os.path.join(folder, 'repo_01')
 
-        subprocess.check_call(['git', 'init'], cwd=sub_folder_git_00.name)
-        subprocess.check_call(['git', 'init'], cwd=sub_folder_git_01.name)
+    os.mkdir(sub_folder_00)
+    os.mkdir(sub_folder_01)
+    os.mkdir(sub_folder_git_00)
+    os.mkdir(sub_folder_git_01)
 
-        # let test use the temp folder
-        yield {
+    assert os.path.exists(sub_folder_00), sub_folder_00
+    assert os.path.exists(sub_folder_01), sub_folder_01
+    assert os.path.exists(sub_folder_git_00), sub_folder_git_00
+    assert os.path.exists(sub_folder_git_01), sub_folder_git_01
+
+    assert os.path.isdir(sub_folder_00), sub_folder_00
+    assert os.path.isdir(sub_folder_01), sub_folder_01
+    assert os.path.isdir(sub_folder_git_00), sub_folder_git_00
+    assert os.path.isdir(sub_folder_git_01), sub_folder_git_01
+
+    subprocess.check_call(['git', 'init'], cwd=sub_folder_git_00)
+    subprocess.check_call(['git', 'init'], cwd=sub_folder_git_01)
+
+    temp_file_00 = os.path.join(folder, 'tmp_00')
+    temp_file_01 = os.path.join(folder, 'tmp_01')
+
+    with open(temp_file_00, 'w') as tf_00:
+        tf_00.write("")
+    with open(temp_file_01, 'w') as tf_01:
+        tf_01.write("")
+
+    assert os.path.exists(temp_file_00), temp_file_00
+    assert os.path.exists(temp_file_01), temp_file_01
+
+    return {
             "top": folder, 
             "folder": [
-                sub_folder_00.name,
-                sub_folder_01.name,
-                sub_folder_git_00.name,
-                sub_folder_git_01.name,
+            sub_folder_00,
+            sub_folder_01,
+            sub_folder_git_00,
+            sub_folder_git_01,
             ],
             "repos": [
-                sub_folder_git_00.name,
-                sub_folder_git_01.name,
+            sub_folder_git_00,
+            sub_folder_git_01,
             ],
             "files": [
                 temp_file_00,
                 temp_file_01,
             ]
         }
-
-        del sub_folder_git_01
-        del sub_folder_git_00
-        del sub_folder_01
-        del sub_folder_00
-
-        # after use, the folder is expected to be removed
-
-    assert not os.path.exists(folder)
 
 
 def test_umbrella(umbrella):
