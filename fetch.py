@@ -18,21 +18,38 @@ import sys
 
 
 def main(argv):
-    folder_gen = filter(os.path.isdir, os.listdir(os.getcwd()))
 
-    git_repo_gen = filter(
-        lambda folder: os.path.exists(os.path.join(os.path.join(folder), '.git', 'config')),
-        folder_gen
+    if not argv:
+        argv = [os.getcwd()]
+
+    working_folder = os.path.abspath(argv[0])
+
+    assert os.path.exists(working_folder)
+
+    item_full_path_list = list(map(lambda item: os.path.join(working_folder, item), os.listdir(working_folder)))
+
+    folder_list = list(
+        filter(
+            lambda item: os.path.isdir(item),
+            item_full_path_list
+        )
     )
 
-    git_repo_list = list(git_repo_gen)
+    git_repo_list = list(
+        filter(
+            lambda folder: os.path.exists(os.path.join(os.path.join(folder), '.git', 'config')),
+            folder_list
+        )
+    )
+
+    assert git_repo_list
 
     random.shuffle(git_repo_list)
 
     return all(
         list(
             map(
-                lambda repo: repeat_this(repo),
+                repeat_this,
                 git_repo_list,
             )
         )
