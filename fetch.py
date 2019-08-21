@@ -19,12 +19,7 @@ import sys
 
 def main(argv):
 
-    if not argv:
-        argv = [os.getcwd()]
-
-    working_folder = os.path.abspath(argv[0])
-
-    assert os.path.exists(working_folder)
+    working_folder = get_working_folder(argv)
 
     item_full_path_list = list(map(lambda item: os.path.join(working_folder, item), os.listdir(working_folder)))
 
@@ -56,6 +51,16 @@ def main(argv):
             )
         )
     )
+
+
+def get_working_folder(argv):
+    if not argv:
+        argv = [os.getcwd()]
+
+    working_folder = os.path.abspath(argv[0])
+
+    assert os.path.exists(working_folder)
+    return working_folder
 
 
 def repeat_this(repo, cmd=['git', 'fetch', '--all'], b_verbose=True):
