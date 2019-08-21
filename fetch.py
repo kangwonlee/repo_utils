@@ -21,12 +21,10 @@ def main(argv):
 
     working_folder = get_working_folder(argv)
 
-    gen_folder = filter(lambda item: os.path.isdir(item), gen_item_full_path(working_folder))
-
     git_repo_list = list(
         filter(
             lambda folder: os.path.exists(os.path.join(os.path.join(folder), '.git', 'config')),
-            gen_folder
+            gen_folder(working_folder)
         )
     )
 
@@ -44,6 +42,10 @@ def main(argv):
             )
         )
     )
+
+
+def gen_folder(working_folder):
+    return filter(lambda item: os.path.isdir(item), gen_item_full_path(working_folder))
 
 
 def gen_item_full_path(working_folder):
