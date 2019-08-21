@@ -11,6 +11,7 @@ $ python fetch.py
 """
 
 
+import multiprocessing
 import os
 import random
 import subprocess
@@ -29,14 +30,19 @@ def main(argv):
 
     assert all(list(map(os.path.exists, git_repo_list)))
 
-    return all(
-        list(
-            map(
-                repeat_this,
-                git_repo_list,
-            )
+    pool = multiprocessing.Pool(multiprocessing.cpu_count())
+
+    result = all(
+        pool.map(
+            repeat_this,
+            git_repo_list,
         )
     )
+
+    pool.close()
+    pool.join()
+
+    return result
 
 
 def gen_git_repo(working_folder):
