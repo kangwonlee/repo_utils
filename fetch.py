@@ -27,7 +27,7 @@ def main(argv):
 
     random.shuffle(git_repo_list)
 
-    assert all(map(os.path.exists, git_repo_list))
+    assert all(list(map(os.path.exists, git_repo_list)))
 
     return all(
         list(
