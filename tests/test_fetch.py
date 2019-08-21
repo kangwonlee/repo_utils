@@ -104,7 +104,7 @@ def test_umbrella(umbrella):
 
 
 def test_gen_item_full_path(umbrella):
-    result = fetch.gen_item_full_path (umbrella['top'])
+    result = fetch.gen_item_full_path(umbrella['top'])
 
     for item in result:
         assert os.path.exists(item), item
