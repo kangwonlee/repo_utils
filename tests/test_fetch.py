@@ -117,5 +117,19 @@ def test_gen_item_full_path(umbrella):
     assert not expected_list
 
 
+def test_gen_folder(umbrella):
+    result = fetch.gen_folder(umbrella['top'])
+
+    expected_list = umbrella['folder']
+
+    assert expected_list
+
+    for item in result:
+        assert os.path.isdir(item), item
+        expected_list.remove(item)
+
+    assert not expected_list
+
+
 if "__main__" == __name__:
     pytest.main()
