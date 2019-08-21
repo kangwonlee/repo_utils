@@ -150,5 +150,10 @@ def test_is_git_repo(umbrella):
         assert fetch.is_git_repo(item)
 
 
+def test_get_git_config_path(umbrella):
+    result = fetch.get_git_config_path(umbrella['repos'][0])
+    assert os.path.exists(result), result
+
+
 if "__main__" == __name__:
     pytest.main()
