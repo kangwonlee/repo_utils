@@ -21,12 +21,12 @@ def main(argv):
 
     working_folder = get_working_folder(argv)
 
-    item_full_path_list = list(map(lambda item: os.path.join(working_folder, item), os.listdir(working_folder)))
+    gen_item_full_path = map(lambda item: os.path.join(working_folder, item), os.listdir(working_folder))
 
     folder_list = list(
         filter(
             lambda item: os.path.isdir(item),
-            item_full_path_list
+            gen_item_full_path
         )
     )
 
