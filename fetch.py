@@ -23,17 +23,12 @@ def main(argv):
 
     gen_item_full_path = map(lambda item: os.path.join(working_folder, item), os.listdir(working_folder))
 
-    folder_list = list(
-        filter(
-            lambda item: os.path.isdir(item),
-            gen_item_full_path
-        )
-    )
+    gen_folder = filter(lambda item: os.path.isdir(item), gen_item_full_path)
 
     git_repo_list = list(
         filter(
             lambda folder: os.path.exists(os.path.join(os.path.join(folder), '.git', 'config')),
-            folder_list
+            gen_folder
         )
     )
 
