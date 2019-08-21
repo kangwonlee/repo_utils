@@ -145,5 +145,10 @@ def test_gen_git_repo(umbrella):
     assert not expected_list
 
 
+def test_is_git_repo(umbrella):
+    for item in umbrella['repos']:
+        assert fetch.is_git_repo(item)
+
+
 if "__main__" == __name__:
     pytest.main()
