@@ -41,9 +41,13 @@ def main(argv):
 
 def gen_git_repo(working_folder):
     return filter(
-        lambda folder: os.path.exists(os.path.join(os.path.join(folder), '.git', 'config')),
+        lambda folder: is_git_repo(folder),
         gen_folder(working_folder)
     )
+
+
+def is_git_repo(folder):
+    return os.path.exists(os.path.join(os.path.join(folder), '.git', 'config'))
 
 
 def gen_folder(working_folder):
