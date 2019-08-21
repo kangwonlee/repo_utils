@@ -131,5 +131,19 @@ def test_gen_folder(umbrella):
     assert not expected_list
 
 
+def test_gen_git_repo(umbrella):
+    result = fetch.gen_git_repo(umbrella['top'])
+
+    expected_list = umbrella['repos']
+
+    assert expected_list
+
+    for item in result:
+        assert os.path.isdir(item), item
+        expected_list.remove(item)
+
+    assert not expected_list
+
+
 if "__main__" == __name__:
     pytest.main()
