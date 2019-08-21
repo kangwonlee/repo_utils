@@ -12,5 +12,12 @@ sys.path.insert(
 import fetch
 
 
+def test_get_working_folder_no_arg():
+    result = fetch.get_working_folder([])
+
+    assert isinstance(result, (str, os.PathLike))
+    assert os.getcwd() == result, result
+
+
 if "__main__" == __name__:
     pytest.main()
