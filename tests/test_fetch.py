@@ -26,5 +26,16 @@ def test_get_working_folder_file():
     assert os.path.dirname(__file__) == result, result
 
 
+@pytest.fixture(scope="module")
+def umbrella():
+    with tempfile.TemporaryDirectory() as folder:
+
+        # let test use the temp folder
+        yield folder.name
+
+        # after use, remove the folder
+        folder.cleanup()
+
+
 if "__main__" == __name__:
     pytest.main()
