@@ -106,8 +106,15 @@ def test_umbrella(umbrella):
 def test_gen_item_full_path(umbrella):
     result = fetch.gen_item_full_path(umbrella['top'])
 
+    expected_list = umbrella['folder'] + umbrella['files']
+
+    assert expected_list
+
     for item in result:
         assert os.path.exists(item), item
+        expected_list.remove(item)
+
+    assert not expected_list
 
 
 if "__main__" == __name__:
