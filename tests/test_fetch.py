@@ -30,7 +30,7 @@ def test_get_working_folder_file():
 def umbrella(tmpdir_factory):
     folder = tmpdir_factory.mktemp("umbrella")
 
-        assert os.path.exists(folder)
+    assert os.path.exists(folder)
 
     # prepare a test folder tree
     # https://doc.pytest.org/en/latest/tmpdir.html#the-tmpdir-factory-fixture
@@ -70,22 +70,22 @@ def umbrella(tmpdir_factory):
     assert os.path.exists(temp_file_01), temp_file_01
 
     return {
-            "top": folder, 
-            "folder": [
+        "top": folder,
+        "folder": [
             sub_folder_00,
             sub_folder_01,
             sub_folder_git_00,
             sub_folder_git_01,
-            ],
-            "repos": [
+        ],
+        "repos": [
             sub_folder_git_00,
             sub_folder_git_01,
-            ],
-            "files": [
-                temp_file_00,
-                temp_file_01,
-            ]
-        }
+        ],
+        "files": [
+            temp_file_00,
+            temp_file_01,
+        ]
+    }
 
 
 def test_umbrella(umbrella):
@@ -101,6 +101,13 @@ def test_umbrella(umbrella):
         assert os.path.exists(
             os.path.join(folder, '.git', 'config')
         ), folder
+
+
+def test_gen_item_full_path(umbrella):
+    result = fetch.gen_item_full_path (umbrella['top'])
+
+    for item in result:
+        assert os.path.exists(item), item
 
 
 if "__main__" == __name__:
