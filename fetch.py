@@ -60,7 +60,7 @@ def main(argv):
 
 def repeat_this(repo, cmd=['git', 'fetch', '--all'], b_verbose=True):
     if b_verbose:
-        print(f"{repo} ".ljust(60, '='))
+        print(f"{repo} ".ljust(75, '='))
 
     return subprocess.check_call(cmd, cwd=repo)
 
