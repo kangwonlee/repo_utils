@@ -21,12 +21,7 @@ def main(argv):
 
     working_folder = get_working_folder(argv)
 
-    git_repo_list = list(
-        filter(
-            lambda folder: os.path.exists(os.path.join(os.path.join(folder), '.git', 'config')),
-            gen_folder(working_folder)
-        )
-    )
+    git_repo_list = list(gen_git_repo(working_folder))
 
     assert git_repo_list
 
@@ -41,6 +36,13 @@ def main(argv):
                 git_repo_list,
             )
         )
+    )
+
+
+def gen_git_repo(working_folder):
+    return filter(
+        lambda folder: os.path.exists(os.path.join(os.path.join(folder), '.git', 'config')),
+        gen_folder(working_folder)
     )
 
 
