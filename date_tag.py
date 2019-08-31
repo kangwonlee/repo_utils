@@ -5,13 +5,18 @@ import sys
 
 
 def main(argv):
-
     assert argv
 
-    tags = subprocess.check_output(['git', 'tag'], cwd=argv[0], encoding='utf-8')
-    tags_list = tags.splitlines()
+    folder = argv[0]
 
-    print(tags_list)
+    tags_list = get_tags_list(folder)
+
+    remotes_list = get_remotes_list(folder)
+
+    for old_tag in filter_date_tags(tags_list):
+        new_tag = convert_date_tag(old_tag)
+
+        git_tag(folder, old_tag, new_tag, remotes_list)
 
 
 def get_tags_list(folder):
@@ -56,12 +61,15 @@ def get_remotes_list(folder):
 
 
 def git_tag(folder, old_tag, new_tag, remotes_list=[]):
+    print(' '.join(['git', 'checkout', old_tag]))
     subprocess.check_call(['git', 'checkout', old_tag], cwd=folder)
+    print(' '.join(['git', 'tag', new_tag]))
     subprocess.check_call(['git', 'tag', new_tag], cwd=folder)
-    subprocess.check_call(['git', 'tag', '--delete', old_tag], cwd=folder)
+    print(' '.join(['git', 'tag', '--delete', old_tag]))
     subprocess.check_call(['git', 'tag', '--delete', old_tag], cwd=folder)
 
     for remote in remotes_list:
+        print(' '.join(['git', 'push', remote, '--delete', old_tag]))
         subprocess.check_call(['git', 'push', remote, '--delete', old_tag])
 
 
