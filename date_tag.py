@@ -47,5 +47,13 @@ def convert_date_tag(tag):
     return sep.join(join_this)
 
 
+def get_remotes_list(folder):
+    assert os.path.exists(folder)
+    assert os.path.isdir(folder)
+
+    remotes = subprocess.check_output(['git', 'remote'], cwd=folder, encoding='utf-8')
+    return remotes.splitlines()
+
+
 if "__main__" == __name__:
     main(sys.argv[1:])
