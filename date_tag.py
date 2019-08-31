@@ -42,7 +42,7 @@ def convert_date_tag(tag):
 
     sep = '/'
 
-    assert 6 > len(tag)
+    assert 6 <= len(tag), tag
 
     join_this = [tag[:2], tag[2:4], tag[4:6],]
 
