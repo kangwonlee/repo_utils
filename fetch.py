@@ -64,7 +64,7 @@ def is_git_repo(folder):
 
 
 def get_git_config_path(folder):
-    return os.path.join(os.path.join(folder), '.git', 'config')
+    return os.path.join(folder, '.git', 'config')
 
 
 def gen_folder(working_folder):
