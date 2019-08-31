@@ -70,7 +70,7 @@ def git_tag(folder, old_tag, new_tag, remotes_list=[]):
 
     for remote in remotes_list:
         print(' '.join(['git', 'push', remote, '--delete', old_tag]))
-        subprocess.check_call(['git', 'push', remote, '--delete', old_tag])
+        subprocess.check_call(['git', 'push', remote, '--delete', old_tag], cwd=folder)
 
 
 if "__main__" == __name__:
