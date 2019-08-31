@@ -23,6 +23,10 @@ def get_current_branch(folder):
     return subprocess.check_output(['git', 'branch', '--show-current'], cwd=folder, encoding='utf-8')
 
 
+def switch_to_branch(folder, new_branch):
+    return subprocess.check_output(['git', 'switch', new_branch], cwd=folder, encoding='utf-8')
+
+
 def get_tags_list(folder):
     assert os.path.exists(folder)
     assert os.path.isdir(folder)
