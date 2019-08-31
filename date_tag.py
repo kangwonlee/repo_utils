@@ -69,8 +69,8 @@ def git_tag(folder, old_tag, new_tag, remotes_list=[]):
     subprocess.check_call(['git', 'tag', '--delete', old_tag], cwd=folder)
 
     for remote in remotes_list:
-        print(' '.join(['git', 'push', remote, '--delete', old_tag]))
-        subprocess.check_call(['git', 'push', remote, '--delete', old_tag], cwd=folder)
+        print(' '.join(['git', 'push', '--delete', remote, old_tag]))
+        subprocess.run(['git', 'push', '--delete', remote, old_tag], cwd=folder)
 
 
 if "__main__" == __name__:
