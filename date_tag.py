@@ -60,7 +60,7 @@ def convert_date_tag(tag):
     join_this = [tag[:2], tag[2:4], tag[4:6],]
 
     if 6 < len(tag):
-        join_this.append(tag[6:].strip('_').strip('-').strip(sep))
+        join_this.append(tag[6:].strip('_').strip('-').strip('.').strip(sep))
 
     return sep.join(join_this)
 
