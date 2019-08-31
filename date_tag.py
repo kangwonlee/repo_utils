@@ -55,5 +55,15 @@ def get_remotes_list(folder):
     return remotes.splitlines()
 
 
+def git_tag(folder, old_tag, new_tag, remotes_list=[]):
+    subprocess.check_call(['git', 'checkout', old_tag], cwd=folder)
+    subprocess.check_call(['git', 'tag', new_tag], cwd=folder)
+    subprocess.check_call(['git', 'tag', '--delete', old_tag], cwd=folder)
+    subprocess.check_call(['git', 'tag', '--delete', old_tag], cwd=folder)
+
+    for remote in remotes_list:
+        subprocess.check_call(['git', 'push', remote, '--delete', old_tag])
+
+
 if "__main__" == __name__:
     main(sys.argv[1:])
