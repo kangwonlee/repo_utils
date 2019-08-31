@@ -25,7 +25,7 @@ def main(argv):
 
 
 def get_current_branch(folder):
-    return subprocess.check_output(['git', 'branch', '--show-current'], cwd=folder, encoding='utf-8')
+    return subprocess.check_output(['git', 'branch', '--show-current'], cwd=folder, encoding='utf-8').strip()
 
 
 def switch_to_branch(folder, new_branch):
