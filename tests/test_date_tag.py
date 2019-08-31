@@ -49,5 +49,27 @@ def test_filter_date_tags(samples_input, samples_output):
     assert set(result) == set(samples_output)
 
 
+@pytest.fixture(scope='module')
+def converted_output():
+    return (
+        "18/10/25/01", 
+        "18/10/30/01", 
+        "18/11/05/01", 
+        "18/11/21/q", 
+        "18/11/30/repair_direction_field",
+        "18/12/01/posix_nt__each_file", 
+        "19/04/09/01", 
+        "19/04/10/01", 
+        "19/06/09/01", 
+        "19/08/17/01",
+    )
+
+
+def test_convert_date_tag(samples_output, converted_output):
+    result = dt.convert_date_tag(samples_output)
+
+    assert tuple(result) == converted_output
+
+
 if "__main__" == __name__:
     pytest.main()
