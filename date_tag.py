@@ -19,6 +19,10 @@ def main(argv):
         git_tag(folder, old_tag, new_tag, tags_list, remotes_list)
 
 
+def get_current_branch(folder):
+    return subprocess.check_output(['git', 'branch', '--show-current'], cwd=folder, encoding='utf-8')
+
+
 def get_tags_list(folder):
     assert os.path.exists(folder)
     assert os.path.isdir(folder)
