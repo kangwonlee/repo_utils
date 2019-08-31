@@ -44,7 +44,7 @@ def filter_date_tags(tags_list):
     result = []
 
     for tag in tags_list:
-        if tag.startswith("18") or tag.startswith("19"):
+        if tag.startswith("18") or tag.startswith("19") or tag.startswith("17"):
             if '/' != tag[2]:
                 result.append(tag)
 
