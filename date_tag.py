@@ -13,10 +13,15 @@ def main(argv):
 
     remotes_list = get_remotes_list(folder)
 
+    branch = get_current_branch(folder)
+
     for old_tag in filter_date_tags(tags_list):
         new_tag = convert_date_tag(old_tag)
 
         git_tag(folder, old_tag, new_tag, tags_list, remotes_list)
+
+    switch_to_branch(folder, branch)
+    subprocess.check_call(['git', 'push', 'origin', '--tags'], cwd=folder)
 
 
 def get_current_branch(folder):
