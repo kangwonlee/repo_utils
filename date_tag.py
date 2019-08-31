@@ -16,7 +16,7 @@ def main(argv):
     for old_tag in filter_date_tags(tags_list):
         new_tag = convert_date_tag(old_tag)
 
-        git_tag(folder, old_tag, new_tag, remotes_list)
+        git_tag(folder, old_tag, new_tag, tags_list, remotes_list)
 
 
 def get_tags_list(folder):
@@ -60,11 +60,12 @@ def get_remotes_list(folder):
     return remotes.splitlines()
 
 
-def git_tag(folder, old_tag, new_tag, remotes_list=[]):
+def git_tag(folder, old_tag, new_tag, tags_list, remotes_list=[]):
     print(' '.join(['git', 'checkout', old_tag]))
     subprocess.check_call(['git', 'checkout', old_tag], cwd=folder)
-    print(' '.join(['git', 'tag', new_tag]))
-    subprocess.check_call(['git', 'tag', new_tag], cwd=folder)
+    if new_tag not in tags_list:
+        print(' '.join(['git', 'tag', new_tag]))
+        subprocess.check_call(['git', 'tag', new_tag], cwd=folder)
     print(' '.join(['git', 'tag', '--delete', old_tag]))
     subprocess.check_call(['git', 'tag', '--delete', old_tag], cwd=folder)
 
