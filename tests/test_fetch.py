@@ -71,20 +71,20 @@ def umbrella(tmpdir_factory):
 
     return {
         "top": folder,
-        "folder": [
+        "folder": (
             sub_folder_00,
             sub_folder_01,
             sub_folder_git_00,
             sub_folder_git_01,
-        ],
-        "repos": [
+        ),
+        "repos": (
             sub_folder_git_00,
             sub_folder_git_01,
-        ],
-        "files": [
+        ),
+        "files": (
             temp_file_00,
             temp_file_01,
-        ]
+        )
     }
 
 
@@ -92,6 +92,7 @@ def test_umbrella(umbrella):
     assert os.path.exists(umbrella["top"])
     assert umbrella['folder']
     assert umbrella['repos']
+    assert os.path.exists(umbrella['repos'][0])
 
     for folder in umbrella['folder']:
         assert os.path.exists(folder), folder
@@ -104,9 +105,12 @@ def test_umbrella(umbrella):
 
 
 def test_gen_item_full_path(umbrella):
+    assert umbrella['repos']
+    assert os.path.exists(umbrella['repos'][0])
+
     result = fetch.gen_item_full_path(umbrella['top'])
 
-    expected_list = umbrella['folder'] + umbrella['files']
+    expected_list = list(umbrella['folder'] + umbrella['files'])
 
     assert expected_list
 
@@ -118,9 +122,12 @@ def test_gen_item_full_path(umbrella):
 
 
 def test_gen_folder(umbrella):
+    assert umbrella['repos']
+    assert os.path.exists(umbrella['repos'][0])
+
     result = fetch.gen_folder(umbrella['top'])
 
-    expected_list = umbrella['folder']
+    expected_list = list(umbrella['folder'])
 
     assert expected_list
 
@@ -132,9 +139,12 @@ def test_gen_folder(umbrella):
 
 
 def test_gen_git_repo(umbrella):
+    assert umbrella['repos']
+    assert os.path.exists(umbrella['repos'][0])
+
     result = fetch.gen_git_repo(umbrella['top'])
 
-    expected_list = umbrella['repos']
+    expected_list = list(umbrella['repos'])
 
     assert expected_list
 
@@ -146,6 +156,9 @@ def test_gen_git_repo(umbrella):
 
 
 def test_is_git_repo(umbrella):
+    assert umbrella['repos'], umbrella
+    assert os.path.exists(umbrella['repos'][0])
+
     for item in umbrella['repos']:
         assert fetch.is_git_repo(item)
 

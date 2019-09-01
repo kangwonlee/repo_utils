@@ -35,12 +35,16 @@ def main(argv):
 
     pool = multiprocessing.Pool(multiprocessing.cpu_count())
 
+    print(f"fetching {len(git_repo_list)} repos with {multiprocessing.cpu_count()} processes")
+
     result = all(
         pool.map(
             repeat_this,
             git_repo_list,
         )
     )
+
+    print(f"finished fetching {len(git_repo_list)} repos with {multiprocessing.cpu_count()} processes")
 
     pool.close()
     pool.join()
@@ -60,7 +64,7 @@ def is_git_repo(folder):
 
 
 def get_git_config_path(folder):
-    return os.path.join(os.path.join(folder), '.git', 'config')
+    return os.path.join(folder, '.git', 'config')
 
 
 def gen_folder(working_folder):
