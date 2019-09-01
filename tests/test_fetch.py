@@ -106,7 +106,7 @@ def test_umbrella(umbrella):
 def test_gen_item_full_path(umbrella):
     result = fetch.gen_item_full_path(umbrella['top'])
 
-    expected_list = umbrella['folder'] + umbrella['files']
+    expected_list = list(umbrella['folder'] + umbrella['files'])
 
     assert expected_list
 
@@ -120,7 +120,7 @@ def test_gen_item_full_path(umbrella):
 def test_gen_folder(umbrella):
     result = fetch.gen_folder(umbrella['top'])
 
-    expected_list = umbrella['folder']
+    expected_list = list(umbrella['folder'])
 
     assert expected_list
 
@@ -134,7 +134,7 @@ def test_gen_folder(umbrella):
 def test_gen_git_repo(umbrella):
     result = fetch.gen_git_repo(umbrella['top'])
 
-    expected_list = umbrella['repos']
+    expected_list = list(umbrella['repos'])
 
     assert expected_list
 
