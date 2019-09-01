@@ -66,9 +66,12 @@ def converted_output():
 
 
 def test_convert_date_tag(samples_output, converted_output):
-    result = dt.convert_date_tag(samples_output)
-
-    assert tuple(result) == converted_output
+    for sample_input_tag, expected_output_tag in zip(samples_output, converted_output):
+        assert sample_input_tag[:2] == expected_output_tag[:2]
+        assert sample_input_tag[2:4] == expected_output_tag[3:5]
+        assert sample_input_tag[4:6] == expected_output_tag[6:8]
+        result = dt.convert_date_tag(sample_input_tag)
+        assert result == expected_output_tag
 
 
 if "__main__" == __name__:
