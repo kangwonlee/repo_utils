@@ -92,6 +92,7 @@ def test_umbrella(umbrella):
     assert os.path.exists(umbrella["top"])
     assert umbrella['folder']
     assert umbrella['repos']
+    assert os.path.exists(umbrella['repos'][0])
 
     for folder in umbrella['folder']:
         assert os.path.exists(folder), folder
@@ -104,6 +105,9 @@ def test_umbrella(umbrella):
 
 
 def test_gen_item_full_path(umbrella):
+    assert umbrella['repos']
+    assert os.path.exists(umbrella['repos'][0])
+
     result = fetch.gen_item_full_path(umbrella['top'])
 
     expected_list = list(umbrella['folder'] + umbrella['files'])
@@ -118,6 +122,9 @@ def test_gen_item_full_path(umbrella):
 
 
 def test_gen_folder(umbrella):
+    assert umbrella['repos']
+    assert os.path.exists(umbrella['repos'][0])
+
     result = fetch.gen_folder(umbrella['top'])
 
     expected_list = list(umbrella['folder'])
@@ -132,6 +139,9 @@ def test_gen_folder(umbrella):
 
 
 def test_gen_git_repo(umbrella):
+    assert umbrella['repos']
+    assert os.path.exists(umbrella['repos'][0])
+
     result = fetch.gen_git_repo(umbrella['top'])
 
     expected_list = list(umbrella['repos'])
@@ -146,6 +156,9 @@ def test_gen_git_repo(umbrella):
 
 
 def test_is_git_repo(umbrella):
+    assert umbrella['repos'], umbrella
+    assert os.path.exists(umbrella['repos'][0])
+
     for item in umbrella['repos']:
         assert fetch.is_git_repo(item)
 
