@@ -71,20 +71,20 @@ def umbrella(tmpdir_factory):
 
     return {
         "top": folder,
-        "folder": [
+        "folder": (
             sub_folder_00,
             sub_folder_01,
             sub_folder_git_00,
             sub_folder_git_01,
-        ],
-        "repos": [
+        ),
+        "repos": (
             sub_folder_git_00,
             sub_folder_git_01,
-        ],
-        "files": [
+        ),
+        "files": (
             temp_file_00,
             temp_file_01,
-        ]
+        )
     }
 
 
