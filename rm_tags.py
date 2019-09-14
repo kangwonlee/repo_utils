@@ -16,6 +16,9 @@ def main(argv):
             sha1 = get_sha1(tag)
             if ns.dry_run:
                 print(sha1, tag)
+                print(f'git tag {ns.prefix}/{tag} {tag}')
+                print(f'git tag --delete {tag}')
+                print(f'git push {ns.remote} --delete {tag}')
 
 
 def get_argparse() -> argparse.ArgumentParser:
