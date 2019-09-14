@@ -1,14 +1,28 @@
+import argparse
 import subprocess
+import sys
 import typing
 
 
-def main():
+def main(argv):
+
+    p = get_argparse()
+    ns = p.parse_args(argv[1:])
+    
     tag_list = get_tag_list()
 
     for tag in tag_list:
-        if not tag.startswith('test_ipynb'):
+        if not tag.startswith(ns.prefix):
             sha1 = get_sha1(tag)
             print(sha1, tag)
+
+
+def get_argparse() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser()
+
+    p.add_argument('--prefix', type=str, required=True)
+
+    return p
 
 
 def set_tag(new_tag, ref):
@@ -62,4 +76,4 @@ def get_sha1(ref: str) -> str:
 
 
 if "__main__" == __name__:
-    main()
+    main(sys.argv)
