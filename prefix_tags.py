@@ -91,13 +91,13 @@ def remove_tag_local_remote(tag:str, remote:str) -> typing.Dict[str, subprocess.
         ['git', 'push', remote, '--delete', tag], 
         capture_output=True,
         encoding='utf-8',
-        check=True,
+        check=False,
     )
     r_local = subprocess.run(
         ['git', 'tag', '--delete', tag], 
         capture_output=True,
         encoding='utf-8',
-        check=True,
+        check=False,
     )
 
     return {'remote': r_remote, 'local': r_local}
