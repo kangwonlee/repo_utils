@@ -1,7 +1,9 @@
 import argparse
+import os
 import subprocess
 import sys
 import typing
+import urllib.parse as up
 
 
 def main(argv: typing.List[str]) -> None:
@@ -52,6 +54,25 @@ def get_argparse() -> argparse.ArgumentParser:
     p.add_argument('--dry-run', action='store_true', default=False)
 
     return p
+
+
+def get_repo_name(remote):
+
+    result = ''
+
+    r = subprocess.check_output(
+        ['git', 'remote', '-v'],
+        encoding='utf-8',
+    )
+
+    for line in r.stdout.splitlines():
+        ls = line.split()
+        if ls[0] == remote:
+            parse = up.urlparse(ls[1])
+            result = os.path.split(parse.path)[-1]
+            break
+
+    return result
 
 
 def set_tag(new_tag, ref):
