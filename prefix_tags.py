@@ -116,7 +116,7 @@ def get_tag_list()-> typing.List[str]:
 
 def get_sha1(ref: str) -> str:
     r = subprocess.run(
-        ['git', 'show', '--pretty=format:%H', ref],
+        ['git', 'log', '-1', '--pretty=format:%H', ref],
         capture_output=True,
         encoding='utf-8',
         check=True,
