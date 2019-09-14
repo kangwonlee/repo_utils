@@ -13,12 +13,33 @@ def main(argv):
 
     for tag in tag_list:
         if not tag.startswith(ns.prefix):
-            sha1 = get_sha1(tag)
-            if ns.dry_run:
-                print(sha1, tag)
-                print(f'git tag {ns.prefix}/{tag} {tag}')
-                print(f'git tag --delete {tag}')
-                print(f'git push {ns.remote} --delete {tag}')
+            handle_tag(tag, ns)
+
+
+def handle_tag(tag, ns):
+    sha1 = get_sha1(tag)
+    if ns.dry_run:
+        print(sha1, tag)
+        print(f'git tag {ns.prefix}/{tag} {tag}')
+        print(f'git tag --delete {tag}')
+        print(f'git push {ns.remote} --delete {tag}')
+    else:
+        print(sha1, tag)
+
+        print(f'git tag {ns.prefix}/{tag} {tag}')
+        r_set_tag = set_tag('/'.join([ns.prefix,tag]), tag)
+        print(r_set_tag.stdout)
+        print(r_set_tag.stderr)
+
+        print(f'git tag --delete {tag}')
+
+        r_remove = remove_tag_local_remote(tag, ns.remote)
+        print(r_remove['local'].stdout)
+        print(r_remove['local'].stderr)
+
+        print(f'git push {ns.remote} --delete {tag}')
+        print(r_remove['remote'].stdout)
+        print(r_remove['remote'].stderr)
 
 
 def get_argparse() -> argparse.ArgumentParser:
