@@ -4,7 +4,7 @@ import sys
 import typing
 
 
-def main(argv):
+def main(argv: typing.List[str]) -> None:
 
     p = get_argparse()
     ns = p.parse_args(argv[1:])
@@ -16,7 +16,7 @@ def main(argv):
             handle_tag(tag, ns)
 
 
-def handle_tag(tag, ns):
+def handle_tag(tag: str, ns: argparse.Namespace) -> None:
     sha1 = get_sha1(tag)
     if ns.dry_run:
         print(sha1, tag)
