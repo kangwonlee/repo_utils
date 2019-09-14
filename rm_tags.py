@@ -24,7 +24,7 @@ def get_argparse() -> argparse.ArgumentParser:
     )
 
     p.add_argument('--prefix', type=str, required=True, help="desired prefix")
-    p.add_argument('--dry-run', action='store_true')
+    p.add_argument('--dry-run', action='store_true', default=False)
 
     return p
 
