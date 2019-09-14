@@ -16,6 +16,12 @@ def main(argv: typing.List[str]) -> None:
     pprint.pprint(duplicate_sha_tags)
 
 
+def remove_duplicate_tags(duplicate_sha_tags: Sha_Tags):
+    for tags in duplicate_sha_tags.values():
+        for tag in tags:
+            pt.remove_tag_local_remote(tag, 'origin')
+
+
 def filter_duplicate_tags(sha_tags_dict:Sha_Tags) -> Sha_Tags:
     return {
         key: value for key, value in filter(
