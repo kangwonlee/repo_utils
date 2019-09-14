@@ -15,6 +15,8 @@ def main(argv: typing.List[str]) -> None:
 
     pprint.pprint(duplicate_sha_tags)
 
+    remove_duplicate_tags(duplicate_sha_tags)
+
 
 def remove_duplicate_tags(duplicate_sha_tags: Sha_Tags):
     for tags in duplicate_sha_tags.values():
