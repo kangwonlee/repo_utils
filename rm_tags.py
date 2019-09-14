@@ -14,13 +14,17 @@ def main(argv):
     for tag in tag_list:
         if not tag.startswith(ns.prefix):
             sha1 = get_sha1(tag)
-            print(sha1, tag)
+            if ns.dry_run:
+                print(sha1, tag)
 
 
 def get_argparse() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser()
+    p = argparse.ArgumentParser(
+        prog='rename tag',
+    )
 
-    p.add_argument('--prefix', type=str, required=True)
+    p.add_argument('--prefix', type=str, required=True, help="desired prefix")
+    p.add_argument('--dry-run', action='store_true')
 
     return p
 
