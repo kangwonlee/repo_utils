@@ -19,7 +19,13 @@ def main(argv: typing.List[str]) -> None:
 def remove_duplicate_tags(duplicate_sha_tags: Sha_Tags):
     for tags in duplicate_sha_tags.values():
         for tag in tags:
-            pt.remove_tag_local_remote(tag, 'origin')
+            result = pt.remove_tag_local_remote(tag, 'origin')
+
+            print(result['remote'].stdout)
+            print(result['remote'].stderr)
+
+            print(result['local'].stdout)
+            print(result['local'].stderr)
 
 
 def filter_duplicate_tags(sha_tags_dict:Sha_Tags) -> Sha_Tags:
