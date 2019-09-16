@@ -6,6 +6,9 @@ import typing
 import urllib.parse as up
 
 
+ShellCommand = typing.Union[str, typing.List[str]]
+
+
 def main(argv: typing.List[str]) -> None:
 
     p = get_argparse()
