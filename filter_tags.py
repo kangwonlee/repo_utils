@@ -6,7 +6,7 @@ import sys
 import typing
 import urllib.parse as up
 
-
+import date_tag as dt
 import list_tags as lt
 import prefix_tags as pt
 
@@ -23,6 +23,16 @@ def add_remote(url:str, name:str=''):
     )
 
     return r
+
+
+def does_remote_exist(remote_name:str, folder:str=os.getcwd()) -> bool:
+    remote_list = dt.get_remotes_list(folder)
+
+    result = remote_name in remote_list
+
+    del remote_list
+
+    return result
 
 
 def remove_remote(name:str='', url:str=''):
