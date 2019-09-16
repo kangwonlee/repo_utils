@@ -100,10 +100,7 @@ def remove_tag_local_remote(tag:str, remote:str) -> typing.Dict[str, subprocess.
         ['git', 'push', remote, '--delete', tag], 
         check=False,
     )
-    r_local = run_cmd(
-        ['git', 'tag', '--delete', tag], 
-        check=False,
-    )
+    r_local = git_delete_tag_local(tag)
 
     return {'remote': r_remote, 'local': r_local}
 
