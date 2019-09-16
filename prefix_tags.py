@@ -78,6 +78,18 @@ def get_repo_name(remote):
     return result
 
 
+def get_repo_name_from_url(url:str) -> str:
+    parse = up.urlparse(url)
+    path_split = os.path.split(parse.path)
+
+    result = path_split[-1]
+
+    del path_split
+    del parse
+
+    return result
+
+
 def set_tag(new_tag, ref):
     r = run_cmd(['git', 'tag', new_tag, ref])
 
