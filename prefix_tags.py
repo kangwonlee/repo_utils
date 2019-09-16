@@ -128,5 +128,16 @@ def get_sha1(ref: str) -> str:
     return r.stdout.strip()
 
 
+def run_cmd(cmd: ShellCommand, check:bool=True, capture_output:bool=True, encoding:str='utf-8') -> subprocess.CompletedProcess:
+    completed_process = subprocess.run(
+        cmd,
+        capture_output=True,
+        encoding='utf-8',
+        check=check,
+    )
+
+    return completed_process
+
+
 if "__main__" == __name__:
     main(sys.argv)
