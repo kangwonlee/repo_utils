@@ -71,8 +71,7 @@ def get_repo_name(remote):
     for line in r.stdout.splitlines():
         ls = line.split()
         if ls[0] == remote:
-            parse = up.urlparse(ls[1])
-            result = os.path.split(parse.path)[-1]
+            result = get_repo_name_from_url(ls[1])
             break
 
     return result
