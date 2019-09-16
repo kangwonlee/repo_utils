@@ -1,6 +1,7 @@
 import argparse
-import configparser
+import json
 import subprocess
+import sys
 import typing
 import urllib.parse as up
 
@@ -31,3 +32,16 @@ def git_fetch_all_tag():
 
 def process_duplicate_tags():
     lt.main([])
+
+
+def main(argv):
+    with open(argv[1], 'rt', encoding='utf-8') as fp:
+        info_dict = json.load(fp)
+
+    r_remote_list = add_remote_list(info_dict['url list'])
+    r_fetch_all = git_fetch_all_tag()
+    process_duplicate_tags()
+
+
+if "__main__" == __name__:
+    main(sys.argv)
