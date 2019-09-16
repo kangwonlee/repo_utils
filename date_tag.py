@@ -18,10 +18,12 @@ def main(argv=sys.argv):
     for old_tag in filter_date_tags(tags_list):
         new_tag = convert_date_tag(old_tag)
 
-        git_tag(ns.folder, old_tag, new_tag, tags_list, remotes_list)
+        git_tag(ns.folder, old_tag, new_tag, tags_list, remotes_list, dry_run=ns.dry_run)
 
     switch_to_branch(ns.folder, branch)
-    subprocess.check_call(['git', 'push', 'origin', '--tags'], cwd=ns.folder)
+
+    if not ns.dry_run:
+        subprocess.check_call(['git', 'push', 'origin', '--tags'], cwd=ns.folder)
 
 
 def get_argparse() -> argparse.ArgumentParser:
@@ -84,18 +86,22 @@ def get_remotes_list(folder):
     return remotes.splitlines()
 
 
-def git_tag(folder, old_tag, new_tag, tags_list, remotes_list=[]):
+def git_tag(folder, old_tag, new_tag, tags_list, remotes_list=[], dry_run:bool=True):
     print(' '.join(['git', 'checkout', old_tag]))
-    subprocess.check_call(['git', 'checkout', old_tag], cwd=folder)
+    if not dry_run:
+        subprocess.check_call(['git', 'checkout', old_tag], cwd=folder)
     if new_tag not in tags_list:
         print(' '.join(['git', 'tag', new_tag]))
-        subprocess.check_call(['git', 'tag', new_tag], cwd=folder)
+        if not dry_run:
+            subprocess.check_call(['git', 'tag', new_tag], cwd=folder)
     print(' '.join(['git', 'tag', '--delete', old_tag]))
-    subprocess.check_call(['git', 'tag', '--delete', old_tag], cwd=folder)
+    if not dry_run:
+        subprocess.check_call(['git', 'tag', '--delete', old_tag], cwd=folder)
 
     for remote in remotes_list:
         print(' '.join(['git', 'push', '--delete', remote, old_tag]))
-        subprocess.run(['git', 'push', '--delete', remote, old_tag], cwd=folder)
+        if not dry_run:
+            subprocess.run(['git', 'push', '--delete', remote, old_tag], cwd=folder)
 
 
 if "__main__" == __name__:
