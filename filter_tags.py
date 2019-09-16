@@ -20,6 +20,23 @@ def add_remote(url:str, name:str=''):
     return r
 
 
+def remove_remote(name:str='', url:str=''):
+    """
+    name would override url
+    """
+    if not name and not url:
+        raise ValueError('need either url or name')
+
+    if not name and url:
+        name = pt.get_repo_name_from_url(url)
+
+    r = pt.run_cmd(
+        ['git', 'remote', 'remove', name]
+    )
+
+    return r
+
+
 def add_remote_list(remote_url_list:typing.List[str]):
     return [add_remote(url)  for url in remote_url_list]
 
