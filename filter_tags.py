@@ -11,6 +11,9 @@ import list_tags as lt
 import prefix_tags as pt
 
 
+PrefixList = typing.Union[typing.List[str], typing.Set[str], typing.Tuple[str]]
+
+
 def add_remote(url:str, name:str=''):
     if not name:
         name = pt.get_repo_name_from_url(url)
