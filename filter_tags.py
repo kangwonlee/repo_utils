@@ -110,7 +110,7 @@ def main(argv):
     r_fetch_all = git_fetch_all_tag()
     process_duplicate_tags()
     r_remove_list = remove_remote_list(info_dict['url list'])
-    # TODO : remove tags with different prefixes
+    r_remote_tags_prefix = remove_tags_with_prefix_in_list(repo_name_list)
 
 
 if "__main__" == __name__:
