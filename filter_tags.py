@@ -74,6 +74,13 @@ def get_tag_prefix(tag:str) -> str:
     return result
 
 
+def gen_filter_tag_prefix(prefix_list:PrefixList):
+    return filter(
+        lambda tag: get_tag_prefix(tag) in prefix_list,
+        pt.get_tag_list()
+    )
+
+
 def main(argv):
     if 2 > len(argv) :
         print('Please give a json file name')
