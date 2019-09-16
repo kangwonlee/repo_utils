@@ -41,6 +41,10 @@ def add_remote_list(remote_url_list:typing.List[str]):
     return [add_remote(url)  for url in remote_url_list]
 
 
+def remove_remote_list(remote_url_list:typing.List[str]):
+    return [remove_remote(url=url)  for url in remote_url_list]
+
+
 def git_fetch_all_tag():
     return pt.run_cmd(
         ['git', 'fetch', '--all', '--tag']
