@@ -64,6 +64,16 @@ def get_repo_name_list(url_list:typing.List[str]) -> typing.List[str]:
     return [pt.get_repo_name_from_url(url) for url in url_list]
 
 
+def get_tag_prefix(tag:str) -> str:
+    tag_split_list = tag.split('/')
+
+    result = tag_split_list[0]
+
+    del tag_split_list
+
+    return result
+
+
 def main(argv):
     if 2 > len(argv) :
         print('Please give a json file name')
