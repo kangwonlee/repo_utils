@@ -57,6 +57,10 @@ def process_duplicate_tags():
     lt.main([])
 
 
+def get_repo_name_list(url_list:typing.List[str]) -> typing.List[str]:
+    return [pt.get_repo_name_from_url(url) for url in url_list]
+
+
 def main(argv):
     if 2 > len(argv) :
         print('Please give a json file name')
