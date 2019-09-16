@@ -58,6 +58,8 @@ def main(argv):
     r_remote_list = add_remote_list(info_dict['url list'])
     r_fetch_all = git_fetch_all_tag()
     process_duplicate_tags()
+    # TODO : remove remotes
+    # TODO : remove tags with different prefixes
 
 
 if "__main__" == __name__:
