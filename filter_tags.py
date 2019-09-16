@@ -1,9 +1,11 @@
 import argparse
 import json
+import os
 import subprocess
 import sys
 import typing
 import urllib.parse as up
+
 
 import list_tags as lt
 import prefix_tags as pt
@@ -56,13 +58,28 @@ def process_duplicate_tags():
 
 
 def main(argv):
-    with open(argv[1], 'rt', encoding='utf-8') as fp:
+    if 2 > len(argv) :
+        print('Please give a json file name')
+        sys.exit(-1)
+    elif os.path.exists(argv[1]):
+        json_filename = argv[1]
+    else:
+        json_filename = os.path.join(
+            os.path.dirname(__file__),
+            argv[1]
+        )
+
+    assert os.path.exists(json_filename), json_filename
+
+    with open(json_filename, 'rt', encoding='utf-8') as fp:
         info_dict = json.load(fp)
+
+    repo_name_list = get_repo_name_list(info_dict['url list'])
 
     r_remote_list = add_remote_list(info_dict['url list'])
     r_fetch_all = git_fetch_all_tag()
     process_duplicate_tags()
-    # TODO : remove remotes
+    r_remove_list = remove_remote_list(info_dict['url list'])
     # TODO : remove tags with different prefixes
 
 
