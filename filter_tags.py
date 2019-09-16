@@ -18,9 +18,15 @@ def add_remote(url:str, name:str=''):
     if not name:
         name = pt.get_repo_name_from_url(url)
 
-    r = pt.run_cmd(
-        ['git', 'remote', 'add', name, url]
-    )
+    if remote_name_exists(name):
+        assert get_remote_url(name) == url, (name, url, get_remote_url(name))
+        r = pt.run_cmd(
+            ['git', 'remote', 'get-url', name]
+        )
+    else:
+        r = pt.run_cmd(
+            ['git', 'remote', 'add', name, url]
+        )
 
     return r
 
