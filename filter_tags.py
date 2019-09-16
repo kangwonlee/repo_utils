@@ -1,6 +1,7 @@
 import argparse
 import configparser
 import subprocess
+import typing
 import urllib.parse as up
 
 import prefix_tags as pt
@@ -16,6 +17,10 @@ def add_remote(url:str, name:str=''):
     )
 
     return r
+
+
+def add_remote_list(remote_url_list:typing.List[str]):
+    return [add_remote(url)  for url in remote_url_list]
 
 
 def git_fetch_all_tag():
