@@ -35,6 +35,18 @@ def does_remote_exist(remote_name:str, folder:str=os.getcwd()) -> bool:
     return result
 
 
+def get_remote_url(remote_name:str) -> str:
+    r = pt.run_cmd(
+        ['git', 'remote', 'get-url', remote_name]
+    )
+
+    result = r.stdout.strip()
+
+    del r
+
+    return result
+
+
 def remove_remote(name:str='', url:str=''):
     """
     name would override url
