@@ -81,6 +81,12 @@ def gen_filter_tag_prefix(prefix_list:PrefixList):
     )
 
 
+def remove_tags_with_prefix_in_list(prefix_list:PrefixList) -> typing.List[subprocess.CompletedProcess]:
+    return [
+        pt.git_delete_tag_local(tag) for tag in gen_filter_tag_prefix(prefix_list)
+    ]
+
+
 def main(argv):
     if 2 > len(argv) :
         print('Please give a json file name')
