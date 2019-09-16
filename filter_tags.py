@@ -25,7 +25,7 @@ def add_remote(url:str, name:str=''):
     return r
 
 
-def does_remote_exist(remote_name:str, folder:str=os.getcwd()) -> bool:
+def remote_name_exists(remote_name:str, folder:str=os.getcwd()) -> bool:
     remote_list = dt.get_remotes_list(folder)
 
     result = remote_name in remote_list
