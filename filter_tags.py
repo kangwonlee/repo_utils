@@ -16,3 +16,9 @@ def add_remote(url:str, name:str=''):
     )
 
     return r
+
+
+def git_fetch_all_tag():
+    return pt.run_cmd(
+        ['git', 'fetch', '--all', '--tag']
+    )
