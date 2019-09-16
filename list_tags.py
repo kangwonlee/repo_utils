@@ -15,6 +15,7 @@ def main(argv: typing.List[str]) -> None:
 
     pprint.pprint(duplicate_sha_tags)
 
+    # TODO : remove duplicated tags if in fetched tags
     remove_duplicate_tags(duplicate_sha_tags)
 
 

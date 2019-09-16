@@ -6,6 +6,9 @@ import typing
 import urllib.parse as up
 
 
+ShellCommand = typing.Union[str, typing.List[str]]
+
+
 def main(argv: typing.List[str]) -> None:
 
     p = get_argparse()
@@ -68,61 +71,71 @@ def get_repo_name(remote):
     for line in r.stdout.splitlines():
         ls = line.split()
         if ls[0] == remote:
-            parse = up.urlparse(ls[1])
-            result = os.path.split(parse.path)[-1]
+            result = get_repo_name_from_url(ls[1])
             break
 
     return result
 
 
+def get_repo_name_from_url(url:str) -> str:
+    parse = up.urlparse(url)
+    path_split = os.path.split(parse.path)
+
+    result = path_split[-1]
+
+    del path_split
+    del parse
+
+    return result
+
+
 def set_tag(new_tag, ref):
-    r = subprocess.run(
-        ['git', 'tag', new_tag, ref],
-        capture_output=True,
-        encoding='utf-8',
-        check=True,
-    )
+    r = run_cmd(['git', 'tag', new_tag, ref])
 
     return r
 
 
 def remove_tag_local_remote(tag:str, remote:str) -> typing.Dict[str, subprocess.CompletedProcess]:
-    r_remote = subprocess.run(
+    r_remote = run_cmd(
         ['git', 'push', remote, '--delete', tag], 
-        capture_output=True,
-        encoding='utf-8',
         check=False,
     )
-    r_local = subprocess.run(
-        ['git', 'tag', '--delete', tag], 
-        capture_output=True,
-        encoding='utf-8',
-        check=False,
-    )
+    r_local = git_delete_tag_local(tag)
 
     return {'remote': r_remote, 'local': r_local}
 
 
-def get_tag_list()-> typing.List[str]:
-    r_tags = subprocess.run(
-        ['git', 'tag'],
-        capture_output=True,
-        encoding='utf-8',
-        check=True,
+def git_delete_tag_local(tag):
+    return run_cmd(
+        ['git', 'tag', '--delete', tag], 
+        check=False,
     )
+
+
+def get_tag_list()-> typing.List[str]:
+    r_tags = run_cmd(['git', 'tag'])
 
     return [tag.strip() for tag in r_tags.stdout.splitlines()]
 
 
 def get_sha1(ref: str) -> str:
-    r = subprocess.run(
-        ['git', 'log', '-1', '--pretty=format:%H', ref],
-        capture_output=True,
-        encoding='utf-8',
-        check=True,
+
+    r = run_cmd(
+        ['git', 'log', '-1', '--pretty=format:%H', ref]
     )
 
     return r.stdout.strip()
+
+
+def run_cmd(cmd: ShellCommand, check:bool=True, capture_output:bool=True, encoding:str='utf-8') -> subprocess.CompletedProcess:
+    completed_process = subprocess.run(
+        cmd,
+        capture_output=True,
+        encoding='utf-8',
+        check=check,
+    )
+
+    return completed_process
 
 
 if "__main__" == __name__:
